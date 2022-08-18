@@ -654,8 +654,18 @@ class Dashboard extends Component {
                 onChange={this.IPInputChanged.bind(this)}
                 placeholder="EX: 187.0.0.0/22 2804:378::/32 ..."
               />
-              <Button variant="outline-primary"  onClick={() => this.insertIPClicked()}>Inserir</Button>
-              <Button variant="outline-danger"  onClick={() => this.deleteIPClicked()}>Deletar</Button>
+              <Button
+                variant="outline-primary"
+                onClick={() => this.insertIPClicked()}
+              >
+                Inserir
+              </Button>
+              <Button
+                variant="outline-danger"
+                onClick={() => this.deleteIPClicked()}
+              >
+                Deletar
+              </Button>
             </InputGroup>
           </Modal.Body>
           <Modal.Body>

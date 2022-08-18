@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios from "axios";
 
 const api = axios.create({
-    baseURL: 'http://172.18.14.234:3002'
+  baseURL: "https://api.adyl.net.br/api-whois",
 });
 
 export default api;
