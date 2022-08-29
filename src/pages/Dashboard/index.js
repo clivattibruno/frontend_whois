@@ -373,7 +373,7 @@ class Dashboard extends Component {
                 placement={"top"}
                 overlay={<Tooltip>Pesquisar</Tooltip>}
               >
-                <Button variant="light" onClick={this.SEARCHButtonClicked}>
+                <Button variant="light" onClick={() => this.SEARCHButtonClicked()}>
                   <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </Button>
               </OverlayTrigger>
