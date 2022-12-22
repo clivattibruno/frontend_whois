@@ -41,7 +41,7 @@ class Dashboard extends Component {
     IPAdd: "",
     IPv4Manual: "",
     IPv6Manual: "",
-    ASignore: "",
+    ASignore: "ok",
   };
 
   //Lista clientes
@@ -61,6 +61,7 @@ class Dashboard extends Component {
       ASNew: "",
       IPv4Manual: "",
       IPv6Manual: "",
+      ASignore: "ok",
     });
 
   //Modal novo AS atras de cliente
@@ -76,6 +77,7 @@ class Dashboard extends Component {
       ASNew: "",
       IPv4Manual: "",
       IPv6Manual: "",
+      ASignore: "ok",
     });
 
   //Modal delete AS
@@ -147,11 +149,13 @@ class Dashboard extends Component {
       if (this.state.isSwitchPrefixOn === false) {
         if (this.state.isSwitchASClientesOn === false) {
           this.setState({ ASignore: "ok" });
+          console.log(this.state.ASignore);
         } else{
           this.setState({ ASignore: "ignore" });
+          console.log(this.state.ASignore);
         }
         const add = await api
-          .post("/clientes", { asinformado: this.state.ASNew, path: "null", ignore: this.state.ASignore})
+          .post("/clientes", { asinformado: this.state.ASNew, path: "null"})
           .then(function () {
             return "ok";
           })
