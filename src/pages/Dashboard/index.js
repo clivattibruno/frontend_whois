@@ -159,7 +159,7 @@ class Dashboard extends Component {
           .post("/clientes", {
             asinformado: this.state.ASNew,
             path: "null",
-            ignore: this.state.ASignore,
+            ignore: this.state.isSwitchASClientesOn,
           })
           .then(function () {
             return "ok";
