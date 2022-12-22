@@ -146,9 +146,9 @@ class Dashboard extends Component {
     if (this.state.ASNew != "") {
       if (this.state.isSwitchPrefixOn === false) {
         if (this.state.isSwitchASClientesOn === false) {
-          ASignore = "ok";
+          this.setState({ ASignore: "ok" });
         } else{
-          ASignore = "ignore";
+          this.setState({ ASignore: "ignore" });
         }
         const add = await api
           .post("/clientes", { asinformado: this.state.ASNew, path: "null", ignore: this.state.ASignore})
