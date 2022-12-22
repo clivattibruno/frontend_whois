@@ -142,7 +142,7 @@ class Dashboard extends Component {
   }
   //Cadastro AS
   async ASNEWButtonClicked() {
-    if (this.state.ASNew != null) {
+    if (this.state.ASNew != "") {
       if (this.state.isSwitchPrefixOn === false) {
         const add = await api
           .post("/clientes", { asinformado: this.state.ASNew, path: "null" })
@@ -192,7 +192,7 @@ class Dashboard extends Component {
   }
   //Cadastro Cliente em AS
   async CLIENTEASNEWButtonClicked() {
-    if (this.state.ASNew != null) {
+    if (this.state.ASNew != "") {
       if (this.state.isSwitchPrefixOn === false) {
         const add = await api
           .post("/clientes", {
