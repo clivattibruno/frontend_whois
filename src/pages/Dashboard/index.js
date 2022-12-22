@@ -120,16 +120,8 @@ class Dashboard extends Component {
     this.setState({ isSwitchPrefixOn: !this.state.isSwitchPrefixOn });
 
   //Switch AS Mudou
-  onSwitchASClientesAction() {
+  onSwitchASClientesAction = () =>
     this.setState({ isSwitchASClientesOn: !this.state.isSwitchASClientesOn });
-    if (this.state.isSwitchASClientesOn === false) {
-      this.setState({ ASignore: "ok" });
-      console.log(this.state.ASignore);
-    } else {
-      this.setState({ ASignore: "ignore" });
-      console.log(this.state.ASignore);
-    }
-  }
 
   //INPUT AS IPv4 Mudou
   ASIPv4InputChanged(event) {
@@ -181,7 +173,7 @@ class Dashboard extends Component {
             path: "null",
             ipv4: this.state.IPv4Manual,
             ipv6: this.state.IPv6Manual,
-            ignore: this.state.ASignore,
+            ignore: this.state.isSwitchASClientesOn,
           })
           .then(function () {
             return "ok";
@@ -214,7 +206,7 @@ class Dashboard extends Component {
           .post("/clientes", {
             asinformado: this.state.ASNew,
             path: this.state.ASPath,
-            ignore: this.state.ASignore,
+            ignore: this.state.isSwitchASClientesOn,
           })
           .then(function () {
             return "ok";
@@ -236,7 +228,7 @@ class Dashboard extends Component {
             path: this.state.ASPath,
             ipv4: this.state.IPv4Manual,
             ipv6: this.state.IPv6Manual,
-            ignore: this.state.ASignore,
+            ignore: this.state.isSwitchASClientesOn,
           })
           .then(function () {
             return "ok";
