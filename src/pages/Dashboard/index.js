@@ -41,6 +41,7 @@ class Dashboard extends Component {
     IPAdd: "",
     IPv4Manual: "",
     IPv6Manual: "",
+    ASignore: "",
   };
 
   //Lista clientes
@@ -144,8 +145,13 @@ class Dashboard extends Component {
   async ASNEWButtonClicked() {
     if (this.state.ASNew != "") {
       if (this.state.isSwitchPrefixOn === false) {
+        if (this.state.isSwitchASClientesOn === false) {
+          ASignore = "ok";
+        } else{
+          ASignore = "ignore";
+        }
         const add = await api
-          .post("/clientes", { asinformado: this.state.ASNew, path: "null" })
+          .post("/clientes", { asinformado: this.state.ASNew, path: "null", ignore: this.state.ASignore})
           .then(function () {
             return "ok";
           })
