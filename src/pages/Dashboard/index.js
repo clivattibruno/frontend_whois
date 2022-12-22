@@ -7,6 +7,7 @@ import {
   faTrash,
   faMagnifyingGlass,
   faPlus,
+  faPenToSquare,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -112,10 +113,12 @@ class Dashboard extends Component {
   closeAlertAS = () => this.setState({ isAlertAS: false });
 
   //Switch Prefix Mudou
-  onSwitchPrefixAction = () => this.setState({ isSwitchPrefixOn: !this.state.isSwitchPrefixOn });
+  onSwitchPrefixAction = () =>
+    this.setState({ isSwitchPrefixOn: !this.state.isSwitchPrefixOn });
 
   //Switch AS Mudou
-  onSwitchASClientesAction = () => this.setState({ isSwitchASClientesOn: !this.state.isSwitchASClientesOn });
+  onSwitchASClientesAction = () =>
+    this.setState({ isSwitchASClientesOn: !this.state.isSwitchASClientesOn });
 
   //INPUT AS IPv4 Mudou
   ASIPv4InputChanged(event) {
@@ -139,42 +142,44 @@ class Dashboard extends Component {
   }
   //Cadastro AS
   async ASNEWButtonClicked() {
-    if (this.state.isSwitchPrefixOn === false) {
-      const add = await api
-        .post("/clientes", { asinformado: this.state.ASNew, path: "null" })
-        .then(function () {
-          return "ok";
-        })
-        .catch(function () {
-          return "erro";
-        });
+    if (this.state.ASNew != null) {
+      if (this.state.isSwitchPrefixOn === false) {
+        const add = await api
+          .post("/clientes", { asinformado: this.state.ASNew, path: "null" })
+          .then(function () {
+            return "ok";
+          })
+          .catch(function () {
+            return "erro";
+          });
 
-      if (add === "erro") {
-        this.setState({ isAlertAS: true });
+        if (add === "erro") {
+          this.setState({ isAlertAS: true });
+        } else {
+          this.SEARCHButtonClicked();
+          this.closeModalclient();
+        }
       } else {
-        this.SEARCHButtonClicked();
-        this.closeModalclient();
-      }
-    } else {
-      const add = await api
-        .post("/clientescomip", {
-          asinformado: this.state.ASNew,
-          path: "null",
-          ipv4: this.state.IPv4Manual,
-          ipv6: this.state.IPv6Manual,
-        })
-        .then(function () {
-          return "ok";
-        })
-        .catch(function () {
-          return "erro";
-        });
+        const add = await api
+          .post("/clientescomip", {
+            asinformado: this.state.ASNew,
+            path: "null",
+            ipv4: this.state.IPv4Manual,
+            ipv6: this.state.IPv6Manual,
+          })
+          .then(function () {
+            return "ok";
+          })
+          .catch(function () {
+            return "erro";
+          });
 
-      if (add === "erro") {
-        this.setState({ isAlertAS: true });
-      } else {
-        this.SEARCHButtonClicked();
-        this.closeModalclient();
+        if (add === "erro") {
+          this.setState({ isAlertAS: true });
+        } else {
+          this.SEARCHButtonClicked();
+          this.closeModalclient();
+        }
       }
     }
   }
@@ -187,45 +192,47 @@ class Dashboard extends Component {
   }
   //Cadastro Cliente em AS
   async CLIENTEASNEWButtonClicked() {
-    if (this.state.isSwitchPrefixOn === false) {
-      const add = await api
-        .post("/clientes", {
-          asinformado: this.state.ASNew,
-          path: this.state.ASPath,
-        })
-        .then(function () {
-          return "ok";
-        })
-        .catch(function () {
-          return "erro";
-        });
+    if (this.state.ASNew != null) {
+      if (this.state.isSwitchPrefixOn === false) {
+        const add = await api
+          .post("/clientes", {
+            asinformado: this.state.ASNew,
+            path: this.state.ASPath,
+          })
+          .then(function () {
+            return "ok";
+          })
+          .catch(function () {
+            return "erro";
+          });
 
-      if (add === "erro") {
-        this.setState({ isAlertAS: true });
+        if (add === "erro") {
+          this.setState({ isAlertAS: true });
+        } else {
+          this.SEARCHButtonClicked();
+          this.closeModalASclient();
+        }
       } else {
-        this.SEARCHButtonClicked();
-        this.closeModalASclient();
-      }
-    } else {
-      const add = await api
-        .post("/clientescomip", {
-          asinformado: this.state.ASNew,
-          path: this.state.ASPath,
-          ipv4: this.state.IPv4Manual,
-          ipv6: this.state.IPv6Manual,
-        })
-        .then(function () {
-          return "ok";
-        })
-        .catch(function () {
-          return "erro";
-        });
+        const add = await api
+          .post("/clientescomip", {
+            asinformado: this.state.ASNew,
+            path: this.state.ASPath,
+            ipv4: this.state.IPv4Manual,
+            ipv6: this.state.IPv6Manual,
+          })
+          .then(function () {
+            return "ok";
+          })
+          .catch(function () {
+            return "erro";
+          });
 
-      if (add === "erro") {
-        this.setState({ isAlertAS: true });
-      } else {
-        this.SEARCHButtonClicked();
-        this.closeModalASclient();
+        if (add === "erro") {
+          this.setState({ isAlertAS: true });
+        } else {
+          this.SEARCHButtonClicked();
+          this.closeModalASclient();
+        }
       }
     }
   }
@@ -380,7 +387,10 @@ class Dashboard extends Component {
                 placement={"top"}
                 overlay={<Tooltip>Pesquisar</Tooltip>}
               >
-                <Button variant="light" onClick={() => this.SEARCHButtonClicked()}>
+                <Button
+                  variant="light"
+                  onClick={() => this.SEARCHButtonClicked()}
+                >
                   <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </Button>
               </OverlayTrigger>
@@ -548,7 +558,7 @@ class Dashboard extends Component {
                         )
                       }
                     >
-                      <FontAwesomeIcon icon={faArrowsRotate} />
+                      <FontAwesomeIcon icon={faPenToSquare} />
                     </Button>
                   </OverlayTrigger>
                 </td>
