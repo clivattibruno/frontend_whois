@@ -31,7 +31,8 @@ class Dashboard extends Component {
     isOpenDelete: false,
     isOpenUpdate: false,
     isAlertAS: false,
-    isSwitchOn: false,
+    isSwitchPrefixOn: false,
+    isSwitchASClientesOn: false,
     ASNew: "",
     ASPath: "",
     DeleteID: "",
@@ -53,7 +54,8 @@ class Dashboard extends Component {
     this.setState({
       isOpenclient: false,
       isAlertAS: false,
-      isSwitchOn: false,
+      isSwitchPrefixOn: false,
+      isSwitchASClientesOn: false,
       ASNew: "",
       IPv4Manual: "",
       IPv6Manual: "",
@@ -67,7 +69,8 @@ class Dashboard extends Component {
     this.setState({
       isOpenASclient: false,
       isAlertAS: false,
-      isSwitchOn: false,
+      isSwitchPrefixOn: false,
+      isSwitchASClientesOn: false,
       ASNew: "",
       IPv4Manual: "",
       IPv6Manual: "",
@@ -108,8 +111,11 @@ class Dashboard extends Component {
   openAlertAS = () => this.setState({ isAlertAS: true });
   closeAlertAS = () => this.setState({ isAlertAS: false });
 
+  //Switch Prefix Mudou
+  onSwitchPrefixAction = () => this.setState({ isSwitchPrefixOn: !this.state.isSwitchPrefixOn });
+
   //Switch AS Mudou
-  onSwitchAction = () => this.setState({ isSwitchOn: !this.state.isSwitchOn });
+  onSwitchASClientesAction = () => this.setState({ isSwitchASClientesOn: !this.state.isSwitchASClientesOn });
 
   //INPUT AS IPv4 Mudou
   ASIPv4InputChanged(event) {
@@ -133,7 +139,7 @@ class Dashboard extends Component {
   }
   //Cadastro AS
   async ASNEWButtonClicked() {
-    if (this.state.isSwitchOn === false) {
+    if (this.state.isSwitchPrefixOn === false) {
       const add = await api
         .post("/clientes", { asinformado: this.state.ASNew, path: "null" })
         .then(function () {
@@ -181,7 +187,7 @@ class Dashboard extends Component {
   }
   //Cadastro Cliente em AS
   async CLIENTEASNEWButtonClicked() {
-    if (this.state.isSwitchOn === false) {
+    if (this.state.isSwitchPrefixOn === false) {
       const add = await api
         .post("/clientes", {
           asinformado: this.state.ASNew,
@@ -290,7 +296,8 @@ class Dashboard extends Component {
   render() {
     const { Clientes } = this.state;
 
-    const { isSwitchOn } = this.state;
+    const { isSwitchPrefixOn } = this.state;
+    const { isSwitchASClientesOn } = this.state;
 
     const headersCSV = [
       { label: "ASNumber", key: "asnumber" },
@@ -415,11 +422,21 @@ class Dashboard extends Component {
 
             <Form>
               <Form.Check
+                inline
                 type="switch"
-                onChange={this.onSwitchAction.bind(this)}
-                checked={isSwitchOn}
-                id="switch-as"
-                label="Inserir prefixos manualmente"
+                onChange={this.onSwitchPrefixAction.bind(this)}
+                checked={isSwitchPrefixOn}
+                id="switch-prefix"
+                label="Inserir prefix manual"
+              />
+
+              <Form.Check
+                inline
+                type="switch"
+                onChange={this.onSwitchASClientesAction.bind(this)}
+                checked={isSwitchASClientesOn}
+                id="switch-as_clientes"
+                label="Ignore AS_Clientes"
               />
             </Form>
 
@@ -428,7 +445,7 @@ class Dashboard extends Component {
             <InputGroup className="mb-3">
               <InputGroup.Text>IPv4</InputGroup.Text>
               <FormControl
-                disabled={!isSwitchOn}
+                disabled={!isSwitchPrefixOn}
                 value={this.state.IPv4Manual}
                 onChange={this.ASIPv4InputChanged.bind(this)}
                 placeholder="EX: 187.0.0.0/22 189.14.239.0/19 ..."
@@ -438,7 +455,7 @@ class Dashboard extends Component {
             <InputGroup className="mb-3">
               <InputGroup.Text>IPv6</InputGroup.Text>
               <FormControl
-                disabled={!isSwitchOn}
+                disabled={!isSwitchPrefixOn}
                 value={this.state.IPv6Manual}
                 onChange={this.ASIPv6InputChanged.bind(this)}
                 placeholder="EX: 2804:378::/32 2804:ac0::/48 ..."
@@ -574,11 +591,20 @@ class Dashboard extends Component {
 
             <Form>
               <Form.Check
+                inline
                 type="switch"
-                onChange={this.onSwitchAction.bind(this)}
-                checked={isSwitchOn}
-                id="switch-as"
-                label="Inserir prefixos manualmente"
+                onChange={this.onSwitchPrefixAction.bind(this)}
+                checked={isSwitchPrefixOn}
+                id="switch-prefix"
+                label="Inserir prefix manual"
+              />
+              <Form.Check
+                inline
+                type="switch"
+                onChange={this.onSwitchASClientesAction.bind(this)}
+                checked={isSwitchASClientesOn}
+                id="switch-as_clientes"
+                label="Ignore AS_Clientes"
               />
             </Form>
 
@@ -587,7 +613,7 @@ class Dashboard extends Component {
             <InputGroup className="mb-3">
               <InputGroup.Text>IPv4</InputGroup.Text>
               <FormControl
-                disabled={!isSwitchOn}
+                disabled={!isSwitchPrefixOn}
                 value={this.state.IPv4Manual}
                 onChange={this.ASIPv4InputChanged.bind(this)}
                 placeholder="EX: 187.0.0.0/22 189.14.239.0/19 ..."
@@ -597,7 +623,7 @@ class Dashboard extends Component {
             <InputGroup className="mb-3">
               <InputGroup.Text>IPv6</InputGroup.Text>
               <FormControl
-                disabled={!isSwitchOn}
+                disabled={!isSwitchPrefixOn}
                 value={this.state.IPv6Manual}
                 onChange={this.ASIPv6InputChanged.bind(this)}
                 placeholder="EX: 2804:378::/32 2804:ac0::/48 ..."
